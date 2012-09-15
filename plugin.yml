@@ -1,0 +1,31 @@
+name: Commander
+main: org.Dragonphase.Commander.Commander
+version: 1.4.1
+website: http://dragonphase.com/
+depend: [Vault]
+description: >
+             Commander lets you set commands on buttons, levers and pressure plates
+commands:
+  commander:
+    description: Commander help
+  com:
+    description: Commander help
+permissions:
+  commander.add:
+    description: Add commands to devices
+    default: op
+  commander.remove:
+    description: Remove commands from devices
+    default: op
+  commander.check:
+    description: Check commands on devices
+    default: op
+  commander.clear:
+    description: Remove the device from the commands.yml file
+    default: op
+  commander.list:
+    description: List all commanded devices and their commands
+    default: op
+  commander.player:
+    description: Allow players to run player commands on devices
+    default: true
