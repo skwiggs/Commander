@@ -1,31 +1,43 @@
 name: Commander
 main: org.Dragonphase.Commander.Commander
-version: 1.4.1
+version: 1.5
 website: http://dragonphase.com/
 depend: [Vault]
 description: >
-             Commander lets you set commands on buttons, levers and pressure plates
+             Commander lets you add commands to buttons, levers and pressure plates
 commands:
   commander:
     description: Commander help
   com:
     description: Commander help
 permissions:
-  commander.add:
-    description: Add commands to devices
-    default: op
-  commander.remove:
-    description: Remove commands from devices
-    default: op
-  commander.check:
-    description: Check commands on devices
-    default: op
-  commander.clear:
-    description: Remove the device from the commands.yml file
-    default: op
-  commander.list:
-    description: List all commanded devices and their commands
-    default: op
-  commander.player:
-    description: Allow players to run player commands on devices
+  commander.device.use.player:
+    description: Allows players to use player commands on devices
     default: true
+  commander.device.use.op:
+    description: Allows players to use op commands on devices
+    default: op
+  commander.device.use.console:
+    description: Allows players to use console commands on devices
+    default: op
+  commander.device.break:
+    description: Allows players to break devices
+    default: op
+  commander.admin.add:
+    description: Allows players add to a device (automatically creates the interface)
+    default: op
+  commander.admin.remove:
+    description: Allows players remove from a device
+    default: op
+  commander.admin.clear:
+    description: Allows players to clear the device they are looking at (remove all commands and interface)
+    default: op
+  commander.admin.check:
+    description: Allows players to check the device they are looking at
+    default: op
+  commander.admin.list:
+    description: Allows players to list all devices
+    default: op
+  commander.admin.reload:
+    description: Allows players to reload Commander
+    default: op
