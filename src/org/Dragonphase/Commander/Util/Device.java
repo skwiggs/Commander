@@ -81,7 +81,7 @@ public class Device {
 	
 	
 	
-	public static String getDeviceName(String string){
+	public static String capitalize(String string){
 		String[] NameList = string.toLowerCase().replace("_", " ").split(" ");
 		String Name = "";
 		
@@ -95,8 +95,8 @@ public class Device {
 	
 	
 	
-	public static String getDeviceName(Block block){
-		return getDeviceName(block.getType().toString());
+	public static String capitalize(Block block){
+		return capitalize(block.getType().toString());
 	}
 	
 	
@@ -187,7 +187,7 @@ public class Device {
 		
 		set(getDeviceID(block) + "." + type + ".commands", commandList);
 
-		String message = commands + ChatColor.GREEN + " to " + getDeviceName(block) + ". It will be run as " + type + ".";
+		String message = commands + ChatColor.GREEN + " to " + capitalize(block) + ". It will be run as " + type + ".";
 		
 		if (!message.startsWith("@")){
 			message = ChatColor.GREEN + "Added " + ChatColor.AQUA + "/" + message;
@@ -203,7 +203,7 @@ public class Device {
 		if (commands.equalsIgnoreCase("*")){
 			set(getDeviceID(block) + "." + type + ".commands", null);
 			
-			player.sendMessage(ChatColor.RED + "Removed all " + type + " commands from " + getDeviceName(block) + ".");
+			player.sendMessage(ChatColor.RED + "Removed all " + type + " commands from " + capitalize(block) + ".");
 			
 			return;
 		}
@@ -213,7 +213,7 @@ public class Device {
 			set(getDeviceID(block) + ".op.commands", null);
 			set(getDeviceID(block) + ".console.commands", null);
 			
-			player.sendMessage(ChatColor.RED + "Removed all commands from " + getDeviceName(block) + ".");
+			player.sendMessage(ChatColor.RED + "Removed all commands from " + capitalize(block) + ".");
 			
 			return;
 		}
@@ -227,7 +227,7 @@ public class Device {
 		
 		set(getDeviceID(block) + "." + type + ".commands", commandList);
 
-		String message = commands + ChatColor.RED + " from " + getDeviceName(block) + ".";
+		String message = commands + ChatColor.RED + " from " + capitalize(block) + ".";
 		
 		if (!message.startsWith("@")){
 			message = ChatColor.RED + "Removed " + ChatColor.AQUA + "/" + message;
@@ -273,7 +273,7 @@ public class Device {
 	
 	public static void clear(Block block, Player player){
 		set(getDeviceID(block), null);
-		player.sendMessage(ChatColor.GREEN + "Command interface cleared from " + getDeviceName(block) + ".");
+		player.sendMessage(ChatColor.GREEN + "Command interface cleared from " + capitalize(block) + ".");
 	}
 	
 	
@@ -287,7 +287,7 @@ public class Device {
 				for (String comType : types.split(",")){
 					List<String> commands = getCommandList(deviceID + "." + comType + ".commands");
 					if (commands.size() == 0) continue;
-					player.sendMessage("  " + ChatColor.GREEN + getDeviceName(comType) + " commands for this " + getDeviceName(block) + ":");
+					player.sendMessage("  " + ChatColor.GREEN + capitalize(comType) + " commands for this " + capitalize(block) + ":");
 					
 					for (String command : commands){
 						if (command.startsWith("@")){
@@ -334,7 +334,7 @@ public class Device {
 				String[] deviceID = key.split("_");
 				
 				if (deviceID.length > 5){
-					String deviceName = getDeviceName(deviceID[0] + "_" + deviceID[1]);
+					String deviceName = capitalize(deviceID[0] + "_" + deviceID[1]);
 					int deviceX = Integer.parseInt(deviceID[2]);
 					int deviceY = Integer.parseInt(deviceID[3]);
 					int deviceZ = Integer.parseInt(deviceID[4]);
@@ -343,14 +343,14 @@ public class Device {
 					if (world.getName().equalsIgnoreCase(deviceWorld)){
 						
 						if (sendTitle){
-							sender.sendMessage(ChatColor.GREEN + "Devices in " + ChatColor.AQUA + getDeviceName(deviceWorld) + ChatColor.GREEN + ":");
+							sender.sendMessage(ChatColor.GREEN + "Devices in " + ChatColor.AQUA + capitalize(deviceWorld) + ChatColor.GREEN + ":");
 							sendTitle = false;
 						}
 						sender.sendMessage(ChatColor.RED + "  " + ChatColor.BOLD + deviceName + ChatColor.RESET + " > " + ChatColor.AQUA + "   X: " + deviceX + "    Y: " + deviceY + "    Z: " + deviceZ + "    Commands: " + numCommands);
 						
 					}
 				}else{
-					String deviceName = getDeviceName(deviceID[0]);
+					String deviceName = capitalize(deviceID[0]);
 					int deviceX = Integer.parseInt(deviceID[1]);
 					int deviceY = Integer.parseInt(deviceID[2]);
 					int deviceZ = Integer.parseInt(deviceID[3]);
@@ -359,7 +359,7 @@ public class Device {
 					if (world.getName().equalsIgnoreCase(deviceWorld)){
 						
 						if (sendTitle){
-							sender.sendMessage(ChatColor.GREEN + "Devices in " + ChatColor.AQUA + getDeviceName(deviceWorld) + ChatColor.GREEN + ":");
+							sender.sendMessage(ChatColor.GREEN + "Devices in " + ChatColor.AQUA + capitalize(deviceWorld) + ChatColor.GREEN + ":");
 							sendTitle = false;
 						}
 						sender.sendMessage(ChatColor.RED + "  " + ChatColor.BOLD + deviceName + ChatColor.RESET + " > " + ChatColor.AQUA + "   X: " + deviceX + "    Y: " + deviceY + "    Z: " + deviceZ + "    Commands: " + numCommands);
@@ -369,25 +369,9 @@ public class Device {
 			}
 			
 			if (worldCommands == 0){
-				sender.sendMessage(ChatColor.RED + "No devices were found in " + getDeviceName(world.getName()));
+				sender.sendMessage(ChatColor.RED + "No devices were found in " + capitalize(world.getName()));
 			}
 			
-		}
-	}
-	
-	
-	
-	public static void performCommand(String command, Player player, int delay){
-		if (command.startsWith("@@")){
-			player.sendMessage(Reference.getReferences(ChatColor.translateAlternateColorCodes('&', command.substring(2)), player));
-		}else{
-			if (!player.isOp()){
-				player.setOp(true);
-				runCommand((CommandSender)player, Reference.getReferences(command, player), delay);
-				player.setOp(false);
-			}else{
-				runCommand((CommandSender)player, Reference.getReferences(command, player), delay);
-			}
 		}
 	}
 	
@@ -397,7 +381,7 @@ public class Device {
 		new Reference(plugin);
 		int delay = 0;
 		for (String command : list){
-			
+
 			if (command.startsWith("@delay")){
 				String[] delayArgs = command.split(" ");
 				delay = Integer.parseInt(delayArgs[1]);
@@ -407,7 +391,7 @@ public class Device {
 				delay = Integer.parseInt(delayArgs[1]);
 				continue;
 			}
-			
+
 			if (command.startsWith("@@")){
 				player.sendMessage(Reference.getReferences(ChatColor.translateAlternateColorCodes('&', command.substring(2)), player));
 			}else if (command.startsWith("@check") && command.contains(">")){
@@ -428,10 +412,13 @@ public class Device {
 					if (checkCommand.startsWith("@return")) return;
 					if (checkCommand.startsWith("@continue")) continue;
 					
-					performCommand(checkCommand, player, delay);
+					performCommand(type, checkCommand, player, delay);
 				}else{
 					if (checkReturn != ""){
-						performCommand(checkReturn, player, delay);
+						if (checkReturn.startsWith("@return")) return;
+						if (checkReturn.startsWith("@continue")) continue;
+						
+						performCommand(type, checkReturn, player, delay);
 					}
 				}
 				
@@ -448,15 +435,18 @@ public class Device {
 				if (checkSplit.length > 2){
 					checkReturn = checkSplit[2];
 				}
-				
+
 				if (permissions.inGroup(checkGroup)){
 					if (checkCommand.startsWith("@return")) return;
 					if (checkCommand.startsWith("@continue")) continue;
 
-					performCommand(checkCommand, player, delay);
+					performCommand(type, checkCommand, player, delay);
 				}else{
 					if (checkReturn != ""){
-						performCommand(checkReturn, player, delay);
+						if (checkReturn.startsWith("@return")) return;
+						if (checkReturn.startsWith("@continue")) continue;
+						
+						performCommand(type, checkReturn, player, delay);
 					}
 				}
 				
@@ -489,31 +479,43 @@ public class Device {
 					if (checkCommand.startsWith("@return")) return;
 					if (checkCommand.startsWith("@continue")) continue;
 
-					performCommand(checkCommand, player, delay);
+					performCommand(type, checkCommand, player, delay);
 				}else{
 					if (checkReturn != ""){
-						performCommand(checkReturn, player, delay);
+						if (checkReturn.startsWith("@return")) return;
+						if (checkReturn.startsWith("@continue")) continue;
+						
+						performCommand(type, checkReturn, player, delay);
 					}
 				}
 				
 			}else{
-				
-				if (type.equalsIgnoreCase("player")) runCommand((CommandSender)player, Reference.getReferences(command, player), delay);
-				
-				if (type.equalsIgnoreCase("op")){
-					if (!player.isOp()){
-						player.setOp(true);
-						 runCommand((CommandSender)player, Reference.getReferences(command, player), delay);
-						player.setOp(false);
-					}else{
-						runCommand((CommandSender)player, Reference.getReferences(command, player), delay);
-					}
-				}
-				
-				if (type.equalsIgnoreCase("console"))  runCommand(plugin.getServer().getConsoleSender(), Reference.getReferences(command, player), delay);
+				performCommand(type, command, player, delay);
 			}
 			
 			delay = 0;
+		}
+	}
+	
+	
+	
+	public static void performCommand(String type, String command, Player player, int delay){
+		String Command = command;
+		if (Command.startsWith("@@")){
+			player.sendMessage(Reference.getReferences(ChatColor.translateAlternateColorCodes('&', Command.substring(2)), player));
+		}else{
+			if (Command.startsWith("/")) Command = Command.substring(1);
+			if (type.equalsIgnoreCase("player")) runCommand((CommandSender)player, Reference.getReferences(Command, player), delay);
+			if (type.equalsIgnoreCase("op")){
+				if (!player.isOp()){
+					player.setOp(true);
+					runCommand((CommandSender)player, Reference.getReferences(Command, player), delay);
+					player.setOp(false);
+				}else{
+					runCommand((CommandSender)player, Reference.getReferences(Command, player), delay);
+				}
+			}
+			if (type.equalsIgnoreCase("console")) runCommand(plugin.getServer().getConsoleSender(), Reference.getReferences(Command, player), delay);
 		}
 	}
 	
