@@ -523,7 +523,7 @@ public class Device {
 	
 	public static void runCommand(final CommandSender sender, final String command, int delay){
 		if (delay > 0){
-			plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable(){
+			plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new Runnable(){
 				public void run(){
 					plugin.getServer().dispatchCommand(sender, command);
 				}
